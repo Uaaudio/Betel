@@ -23,10 +23,6 @@ const Connection = require("./src/database/connection");
 
 const syncTables = require("./src/database/syncTables");
 
-// Admin seed.
-const {wendellCreate} = require("./src/middlewares/adminSeed");
-wendellCreate();
-
 //importando minhas rotas.
 const adminRoutes = require("./src/routes/adminRoutes");
 const loginRoutes = require("./src/routes/loginRoutes");
