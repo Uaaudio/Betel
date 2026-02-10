@@ -1,27 +1,30 @@
 const Sequelize = require("sequelize");
-require('dotenv').config(); // Garante que ele leia o arquivo .env
+require('dotenv').config();
 
-// Tenta pegar a URL completa da Square Cloud
-const DB_URL = process.env.DB_URL;
+const dbUri = process.env.DB_URL;
 
 let Connection;
 
-if (DB_URL) {
-    // Conexão para Square Cloud usando a URL completa
-    Connection = new Sequelize(DB_URL, {
-        dialect: "mysql",
-        timezone: "-03:00", // Horário de Salvador
-        logging: false
+if (dbUri && typeof dbUri === 'string') {
+    // Configuração para SQUARE CLOUD (Com SSL Obrigatório)
+    Connection = new Sequelize(dbUri, { 
+        dialect: "mysql", 
+        timezone: "-03:00", 
+        logging: false,
+        dialectOptions: {
+            ssl: {
+                rejectUnauthorized: false
+            }
+        }
     });
 } else {
-    // Conexão para o seu Notebook (Local)
+    // Configuração para seu NOTEBOOK (Local)
     Connection = new Sequelize(
         process.env.DB_NAME, 
         process.env.DB_USER, 
         process.env.DB_PASS, 
         {
             host: process.env.DB_HOST,
-            port: process.env.DB_PORT || 3306,
             dialect: "mysql",
             timezone: "-03:00",
             logging: false
@@ -31,10 +34,10 @@ if (DB_URL) {
 
 Connection.authenticate()
     .then(() => {
-        console.log("🚀 Conexão estabelecida com sucesso!");
+        console.log("🚀 Gênesis conectado ao banco com sucesso!");
     })
     .catch((error) => {
-        console.error("❌ Erro ao conectar no banco de dados:", error);
+        console.error("❌ Erro ao conectar no banco:", error);
     });
 
 module.exports = Connection;

@@ -21,7 +21,7 @@ require("dotenv").config();
 // Importando meu banco para sync.
 const Connection = require("./src/database/connection");
 
-//const syncTables = require("./src/database/syncTables");
+const syncTables = require("./src/database/syncTables");
 
 //importando minhas rotas.
 const adminRoutes = require("./src/routes/adminRoutes");
