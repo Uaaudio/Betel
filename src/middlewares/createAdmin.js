@@ -1,29 +1,29 @@
-const User = require("../models/user"); // Ajuste o caminho para o seu model de User
-const bcrypt = require("bcrypt"); // Se você usa bcrypt para senhas
+const User = require("../models/user"); 
+const bcrypt = require("bcrypt");
 
 async function seedAdmin() {
     try {
-        // Verifica se já existe um Admin para não duplicar
         const adminExists = await User.findOne({ where: { email: "admin@betel.com" } });
 
         if (!adminExists) {
-            // Se você usa hash de senha (recomendado), encripte aqui
-            const hashedPassword = await bcrypt.hash("sua_senha_segura_aqui", 10);
+            const hashedPassword = await bcrypt.hash("sua_senha_aqui", 10);
 
             await User.create({
-                nome: "Wendell",
+                // Ajuste aqui conforme o seu Model (visto no erro: name e password)
+                name: "Administrador Betel", 
                 email: "admin@betel.com",
-                senha: hashedPassword,
-                cargo: "admin" // Supondo que você tenha esse campo no model
+                password: hashedPassword, // O erro disse que 'password' não pode ser null
+                role: "admin" // ou cargo, verifique seu model
             });
 
             console.log("✅ Usuário Admin criado com sucesso!");
         } else {
-            console.log("ℹ️ Usuário Admin já existe no banco.");
+            console.log("ℹ️ Usuário Admin já existe.");
         }
     } catch (error) {
-        console.error("❌ Erro ao criar Seed de Admin:", error);
+        console.error("❌ Erro ao criar Seed de Admin:");
+        console.error(error);
     }
 }
 
-module.exports = {seedAdmin};
+module.exports = seedAdmin;
