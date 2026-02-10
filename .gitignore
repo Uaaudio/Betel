@@ -1,2 +1,5 @@
 "node_modules" 
 .env
+cerificate.perm
+private-key.key
+ca-cerificate.crt

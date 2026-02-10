@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 3001;
+const PORT = 80;
 
 //importando e configurando o bodyparser.
 const bodyParser = require("body-parser");
@@ -20,14 +20,12 @@ require("dotenv").config();
 
 // Importando meu banco para sync.
 const Connection = require("./src/database/connection");
-Connection.sync({ force: true }).then(() => {
-    console.log("🚀 Tabelas sincronizadas no banco Betel!");
-}).catch((error) => {
-    console.log("❌ Falha ao sincronizar as tabelas:");
-    console.log(error.message); // Usar .message limpa o log para você ver o erro real
-});
 
+const syncTables = require("./src/database/syncTables");
 
+// Admin seed.
+const {wendellCreate} = require("./src/middlewares/adminSeed");
+wendellCreate();
 
 //importando minhas rotas.
 const adminRoutes = require("./src/routes/adminRoutes");
