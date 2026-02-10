@@ -1,46 +1,46 @@
 const Sequelize = require("sequelize");
-const fs = require("fs");
-const path = require("path");
+const mysql = require("mysql2/promise"); // Driver para criar o banco
 require('dotenv').config();
 
-const dbUri = process.env.DB_URL;
+const dbConfig = {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 7144,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+};
 
-let Connection;
-
-if (dbUri) {
-    // Configuração para PRODUÇÃO (Square Cloud com Certificados)
-    Connection = new Sequelize(dbUri, {
-        dialect: "mysql",
-        timezone: "-03:00",
-        logging: false,
-        dialectOptions: {
-            ssl: {
-                // Carrega os arquivos que você recebeu
-                // Certifique-se de que os nomes dos arquivos estão idênticos aos da sua pasta
-                ca: fs.readFileSync(path.join(__dirname, "ca-certificate.crt")),
-                cert: fs.readFileSync(path.join(__dirname, "certificate.pem")),
-                key: fs.readFileSync(path.join(__dirname, "private-key.key")),
-                rejectUnauthorized: true // Agora usamos true porque temos os certificados oficiais
-            }
-        }
-    });
-} else {
-    // Configuração para seu NOTEBOOK (Local)
-    Connection = new Sequelize(
-        process.env.DB_NAME, 
-        process.env.DB_USER, 
-        process.env.DB_PASS, 
-        {
-            host: process.env.DB_HOST,
-            dialect: "mysql",
-            timezone: "-03:00",
-            logging: false
-        }
-    );
+// 1. Função para garantir que o banco 'betel' existe
+async function ensureDatabaseExists() {
+    try {
+        const connection = await mysql.createConnection({
+            ...dbConfig,
+            ssl: { rejectUnauthorized: false }
+        });
+        await connection.query(`CREATE DATABASE IF NOT EXISTS betel;`);
+        await connection.end();
+        console.log("✅ Banco 'betel' pronto para uso!");
+    } catch (err) {
+        console.error("❌ Erro ao criar banco:", err.message);
+    }
 }
 
-Connection.authenticate()
-    .then(() => console.log("🚀 Gênesis conectado com SSL Estrito!"))
-    .catch(err => console.error("❌ Erro na conexão com certificados:", err));
+// 2. Configuração do Sequelize
+const Connection = new Sequelize('betel', dbConfig.user, dbConfig.password, {
+    host: dbConfig.host,
+    port: dbConfig.port,
+    dialect: "mysql",
+    timezone: "-03:00",
+    logging: false,
+    dialectOptions: {
+        ssl: { rejectUnauthorized: false }
+    }
+});
+
+// Executa a criação antes de autenticar
+ensureDatabaseExists().then(() => {
+    Connection.authenticate()
+        .then(() => console.log("🚀 Gênesis conectado ao banco Betel com sucesso!"))
+        .catch(err => console.log("❌ Erro Sequelize:", err.message));
+});
 
 module.exports = Connection;
