@@ -1,4 +1,4 @@
-async function actionsMap(req,res) {
+async function actionsMap(req,res,next) {
     
     const adminLogged = req.session.user
     const date = new Date();
@@ -6,6 +6,7 @@ async function actionsMap(req,res) {
 
     console.log("Ação realizada por: "+adminLogged);
     console.log("Ação realizada em: "+dataEHora);
+    return next();
 };
 
 
