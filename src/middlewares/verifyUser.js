@@ -1,6 +1,6 @@
 
 const User = require ("../models/user");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Função para verificar o usuario.
 async function verifyUser(req,res,login,password,next){
