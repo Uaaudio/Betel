@@ -4,7 +4,7 @@ const Patio = require("../models/patio");
 const prayerCircle = require("../models/prayerCircle");
 
 // force: false evita que o banco seja apagado a cada restart
-Connection.sync({ force: false }).then(() => {
+Connection.sync({ force: true }).then(() => {
     console.log("🚀 Tabelas sincronizadas no banco Betel!");
 }).catch((error) => {
     console.log("❌ Falha ao sincronizar as tabelas:");
