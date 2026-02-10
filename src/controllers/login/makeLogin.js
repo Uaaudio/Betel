@@ -9,9 +9,7 @@ async function makeLogin(req,res){
         
         if(login && password){
             // Minha função de tratamento de login.
-           await verifyUser(req,res,login,password);
-
-           return res.redirect("/admin/dashboard");
+           return await verifyUser(req,res,login,password);
             
         }else{
             console.log("Os campos estão vazios, por gentileza verifique");

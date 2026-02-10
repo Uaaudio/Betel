@@ -29,12 +29,18 @@ async function verifyUser(req,res,login,password,next){
                 };
 
                 // Força o save da sessão nos cookies.
+                return req.session.save((error)=>{
 
-                req.session.save(()=>{
-                   console.log("Dados Salvos nos cookies");
+                    if(error){
+                        console.log("Falha ao salvar a sessão");
+                        res.redirect("/");
+                    }else{
+                        console.log("Sessão realizada com sucesso!!");
+                        res.redirect("/admin/dashboard");
+                    };
+                   
                 });
-
-                next();
+                
 
             }else{
 
