@@ -11,7 +11,7 @@ async function makeLogin(req,res){
             // Minha função de tratamento de login.
            await verifyUser(req,res,login,password);
 
-           return redirect("/admin/dashboard");
+           return res.redirect("/admin/dashboard");
             
         }else{
             console.log("Os campos estão vazios, por gentileza verifique");
