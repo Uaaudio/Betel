@@ -1,5 +1,5 @@
 const User = require("../models/user"); // Ajuste o caminho para o seu model de User
-const bcrypt = require("bcryptjs"); // Se você usa bcrypt para senhas
+const bcrypt = require("bcrypt"); // Se você usa bcrypt para senhas
 
 async function seedAdmin() {
     try {
