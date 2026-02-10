@@ -23,14 +23,15 @@ async function verifyUser(req,res,login,password,next){
 
                 };
 
-
+                // Força o save da sessão.
                 req.session.save(()=>{
-                    console.log("Sessão salva com sucesso")
+                    console.log("Sessão salva com sucesso");
                     return res.redirect("/admin/dashboard");
                 })
 
             }else{
-
+                
+                // caso a senha seja incorreta ele entra aqui
                 console.log("Senha incorreta, acesso negado.");
                 return res.redirect("/");
             };
