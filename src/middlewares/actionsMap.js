@@ -1,4 +1,4 @@
-async function actionsMap() {
+async function actionsMap(req,res) {
     
     const adminLogged = req.session.user
     const date = new Date();
