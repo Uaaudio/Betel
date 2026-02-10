@@ -20,13 +20,6 @@ require("dotenv").config();
 
 // Importando meu banco para sync.
 const Connection = require("./src/database/connection");
-Connection.sync({ force: true }).then(() => {
-    console.log("🚀 Tabelas sincronizadas no banco Betel!");
-}).catch((error) => {
-    console.log("❌ Falha ao sincronizar as tabelas:");
-    console.log(error.message); // Usar .message limpa o log para você ver o erro real
-});
-
 
 
 //importando minhas rotas.
