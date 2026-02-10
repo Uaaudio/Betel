@@ -6,14 +6,14 @@ async function seedAdmin() {
         const adminExists = await User.findOne({ where: { email: "admin@betel.com" } });
 
         if (!adminExists) {
-            const hashedPassword = await bcrypt.hash("sua_senha_aqui", 10);
+            const hashedPassword = await bcrypt.hash("Wendell@10", 10);
 
             await User.create({
                 // Ajuste aqui conforme o seu Model (visto no erro: name e password)
-                name: "Administrador Betel", 
-                email: "admin@betel.com",
+                name: "Wendell", 
+                email: "admin@sistema.com",
                 password: hashedPassword, // O erro disse que 'password' não pode ser null
-                role: "admin" // ou cargo, verifique seu model
+                role: "WENDELL" // ou cargo, verifique seu model
             });
 
             console.log("✅ Usuário Admin criado com sucesso!");
