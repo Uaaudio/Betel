@@ -11,7 +11,7 @@ async function seedAdmin() {
             const hashedPassword = await bcrypt.hash("sua_senha_segura_aqui", 10);
 
             await User.create({
-                nome: "Administrador Betel",
+                nome: "Wendell",
                 email: "admin@betel.com",
                 senha: hashedPassword,
                 cargo: "admin" // Supondo que você tenha esse campo no model
