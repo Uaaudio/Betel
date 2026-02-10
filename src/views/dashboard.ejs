@@ -2,22 +2,21 @@
 
 <div class="p-5 mb-4 bg-dark text-white rounded-4 shadow">
     <div class="container-fluid py-2">
-        <h1 class="display-5 fw-bold">Olá, <%= userLogged.name %>👋</h1>
-        <p class="col-md-8 fs-5 opacity-75">Bem-vindo ao sistema Betel. Aqui está o resumo financeiro de <%= new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) %>.</p>
+        <h1 class="display-5 fw-bold">Olá, <%= userLogged.name %> 👋</h1>
+        <p class="col-md-8 fs-5 opacity-75">Resumo de <%= new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) %>.</p>
     </div>
 </div>
 
 <div class="row g-4">
     <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm rounded-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 border-start border-primary border-5">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="bg-primary bg-opacity-10 p-3 rounded-3">
                         <i class="bi bi-people-fill text-primary fs-3"></i>
                     </div>
-                    <span class="badge rounded-pill bg-primary">Sistema</span>
                 </div>
-                <h6 class="text-muted mb-1 text-uppercase small fw-bold">Usuários Cadastrados</h6>
+                <h6 class="text-muted mb-1 text-uppercase small fw-bold">Usuários no Sistema</h6>
                 <h2 class="display-6 fw-bold m-0"><%= totalUsers %></h2>
             </div>
         </div>
@@ -32,7 +31,7 @@
                     </div>
                 </div>
                 <h6 class="text-muted mb-1 text-uppercase small fw-bold">Círculo de Oração</h6>
-                <h2 class="display-6 fw-bold m-0">R$ <%= (totalCollectedPrayerCircles || 0).toFixed(2) %></h2>
+                <h2 class="display-6 fw-bold m-0">R$ <%= (totalCollectedPrayerCircles || 0).toFixed(2).replace('.', ',') %></h2>
                 <p class="text-muted small mt-2 mb-0">
                     <i class="bi bi-calendar-check me-1"></i><%= totalPrayerCircles %> registros este mês
                 </p>
@@ -49,7 +48,7 @@
                     </div>
                 </div>
                 <h6 class="text-muted mb-1 text-uppercase small fw-bold">Arrecadação Pátio</h6>
-                <h2 class="display-6 fw-bold m-0">R$ <%= (totalCollectedPatios || 0).toFixed(2) %></h2>
+                <h2 class="display-6 fw-bold m-0">R$ <%= (totalCollectedPatios || 0).toFixed(2).replace('.', ',') %></h2>
                 <p class="text-muted small mt-2 mb-0">
                     <i class="bi bi-cart-check me-1"></i><%= totalPatios %> vendas registradas
                 </p>
@@ -59,56 +58,41 @@
 </div>
 
 <div class="row mt-5">
-    <div class="col-12">
-        <div class="p-4 bg-white rounded-4 shadow-sm border">
-            <h5 class="fw-bold mb-4">Gerenciamento Rápido</h5>
-            <div class="row g-2">
-                <div class="col-md-3">
-                    <button class="btn btn-outline-dark w-100 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#modalNovoUsuario">
-                        <i class="bi bi-person-plus-fill me-2"></i>Novo Usuário
-                    </button>
-                </div>
-                <div class="col-md-3">
-                    <a href="/admin/patio/new" class="btn btn-success w-100 py-2 rounded-3">
-                        <i class="bi bi-plus-lg me-2"></i>Novo Pátio
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="/admin/prayer-circle/new" class="btn btn-info text-white w-100 py-2 rounded-3">
-                        <i class="bi bi-plus-lg me-2"></i>Novo Círculo
-                    </a>
-                </div>
+    <div class="col-md-4">
+        <div class="p-4 bg-white rounded-4 shadow-sm border h-100">
+            <h5 class="fw-bold mb-4">Ações Rápidas</h5>
+            <div class="d-grid gap-3">
+                <button class="btn btn-dark py-2 rounded-3 text-start" data-bs-toggle="modal" data-bs-target="#modalNovoUsuario">
+                    <i class="bi bi-person-plus me-2"></i>Novo Usuário
+                </button>
+                <button class="btn btn-outline-danger py-2 rounded-3 text-start" data-bs-toggle="modal" data-bs-target="#modalDeletarUsuario">
+                    <i class="bi bi-person-x me-2"></i>Excluir Usuário
+                </button>
+                <hr>
+                <a href="/admin/patio/new" class="btn btn-success py-2 rounded-3 text-start">
+                    <i class="bi bi-plus-circle me-2"></i>Novo Registro Pátio
+                </a>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="p-4 bg-white rounded-4 shadow-sm border">
-            <h5 class="fw-bold mb-4">Lista de Usuários</h5>
+    <div class="col-md-8">
+        <div class="p-4 bg-white rounded-4 shadow-sm border h-100">
+            <h5 class="fw-bold mb-4">Usuários Recentes</h5>
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="small text-uppercase text-muted">
                             <th>Nome</th>
-                            <th>Email</th>
                             <th>Nível</th>
-                            <th class="text-end">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% users.forEach(user => { %>
-                        <tr>
-                            <td><strong><%= user.name %></strong></td>
-                            <td><%= user.email %></td>
-                            <td><span class="badge bg-secondary"><%= user.role %></span></td>
-                            <td class="text-end">
-                                <button onclick="abrirModalDeletar('<%= user.id %>', '<%= user.name %>')" class="btn btn-sm btn-danger rounded-3">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><%= user.name %></td>
+                                <td><span class="badge bg-light text-dark border"><%= user.role %></span></td>
+                            </tr>
                         <% }) %>
                     </tbody>
                 </table>
@@ -119,80 +103,55 @@
 
 <div class="modal fade" id="modalNovoUsuario" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-content rounded-4 border-0 shadow">
             <div class="modal-header border-0 p-4 pb-0">
-                <h5 class="modal-title fw-bold">Cadastrar Novo Usuário</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="fw-bold">Novo Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form action="/admin/users/create" method="POST">
                 <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Nome Completo</label>
-                        <input type="text" name="name" class="form-control rounded-3" placeholder="Ex: João Silva" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">E-mail</label>
-                        <input type="email" name="email" class="form-control rounded-3" placeholder="email@exemplo.com" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Senha Inicial</label>
-                        <input type="password" name="password" class="form-control rounded-3" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Nível de Acesso</label>
-                        <select name="role" class="form-select rounded-3">
-                            <option value="MEMBER">Membro</option>
-                            <option value="ADMIN">Administrador</option>
-                            <option value="WENDELL">Wendell</option>
-                        </select>
-                    </div>
+                    <input type="text" name="name" class="form-control mb-3 rounded-3" placeholder="Nome completo" required>
+                    <input type="email" name="email" class="form-control mb-3 rounded-3" placeholder="E-mail" required>
+                    <input type="password" name="password" class="form-control mb-3 rounded-3" placeholder="Senha" required>
+                    <select name="role" class="form-select rounded-3">
+                        <option value="MEMBER">Membro</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="WENDELL">Wendell</option>
+                    </select>
                 </div>
                 <div class="modal-footer border-0 p-4 pt-0">
-                    <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-dark rounded-3 px-4">Salvar</button>
+                    <button type="submit" class="btn btn-primary w-100 rounded-3">Cadastrar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalConfirmarDelecao" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+<div class="modal fade" id="modalDeletarUsuario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-4 border-0 shadow">
-            <div class="modal-body p-4 text-center">
-                <i class="bi bi-exclamation-octagon text-danger display-3 mb-3 d-block"></i>
-                <h5 class="fw-bold">Atenção!</h5>
-                <p class="text-muted small">Deseja realmente excluir <br><strong id="nomeUsuarioDeletar"></strong>?</p>
-                
-                <form action="/admin/deleteuser" method="POST">
-                    
-                    
-                    <select name="id" id="">
-
-                            <option value="0">Selecione um usuário</option>
-                        <% users.forEach(function(user){%>
-                            <option value="<%= user.id %>"><%= user.name %></option>
-                        <%})%>
-
-                    </select>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-danger rounded-3 py-2">Confirmar Exclusão</button>
-                        <button type="button" class="btn btn-light rounded-3 py-2" data-bs-dismiss="modal">Desistir</button>
-                    </div>
-                </form>
+            <div class="modal-header border-0 p-4 pb-0">
+                <h5 class="fw-bold">Excluir Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+            <form action="/admin/deleteuser" method="POST">
+                <div class="modal-body p-4">
+                    <p class="small text-muted">Selecione o usuário que deseja remover permanentemente:</p>
+                    <select name="id" class="form-select rounded-3" required>
+                        <option value="" disabled selected>Escolha um usuário...</option>
+                        <% users.forEach(user => { %>
+                            <% if(user.id != userLogged.id) { %>
+                                <option value="<%= user.id %>"><%= user.name %></option>
+                            <% } %>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="submit" class="btn btn-danger w-100 rounded-3">Confirmar Exclusão</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-<script>
-    function abrirModalDeletar(id, nome) {
-        document.getElementById('idUsuarioDeletar').value = id;
-        document.getElementById('nomeUsuarioDeletar').innerText = nome;
-        
-        var modal = new bootstrap.Modal(document.getElementById('modalConfirmarDelecao'));
-        modal.show();
-    }
-</script>
 
 <%- include('./partials/footer') %>
