@@ -11,6 +11,8 @@ async function createUser(req,res){
         const email = req.body.email;
         const role = req.body.role;
 
+        const userLogged = req.session.user;
+
         if(name && password){
 
             const hashPassword = await bcrypt.hash(password,15); 
@@ -24,7 +26,8 @@ async function createUser(req,res){
                 });
 
                 console.log("Usuário Registrado com sucesso!!");
-                //return res.redirect("/admin/dashboard");
+                console.log("Usuário criado por: "+ userLogged.name);
+                return res.redirect("/admin/dashboard");
 
 
             }catch(error){
