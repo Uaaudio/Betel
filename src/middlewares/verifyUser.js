@@ -1,30 +1,38 @@
 
-const User = require ("../../models/user");
+const User = require ("../models/user");
 const bcrypt = require('bcrypt');
 
+// Função para verificar o usuario.
 async function verifyUser(req,res,login,password,next){
 
     try{
+
+        // procura um unico usuario pelo login.
 
         const user = await User.findOne({
             where:{
                 email:login
             }});
 
-        console.log("Usuário encontrado!");
-        
         if(user){
             const match = await bcrypt.compare(password,user.password);
-        
+            
+            // se a senha corresponde corretamente ele entra.
             if (match){
 
+                // cria o cookie da sessão mandando os dados do user pro navegador.
                 req.session.user = {
                     id: user.id,
                     name:user.name,
                     role:user.role
 
                 };
-                return res.redirect("/admin/dashboard");
+
+                // Força o save da sessão nos cookies.
+
+                req.session.save(()=>{
+                    return res.redirect("/admin/dashboard");
+                })
 
             }else{
 

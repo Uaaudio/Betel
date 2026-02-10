@@ -8,8 +8,6 @@ async function makeLogin(req,res){
         const password = req.body.password;
         
         if(login && password){
-        
-
             // Minha função de tratamento de login.
            await verifyUser(req,res,login,password);
             
@@ -21,6 +19,7 @@ async function makeLogin(req,res){
     }catch(error){
 
         console.log("Informações incompletas, por gentileza verifique");
+        console.log(error);
         return res.redirect("/"); // pagina de login novamente
     };
 };
