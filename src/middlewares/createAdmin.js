@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 async function seedAdmin() {
     try {
-        const adminExists = await User.findOne({ where: { email: "admin@betel.com" } });
+        
 
         if (!adminExists) {
             const hashedPassword = await bcrypt.hash("Wendell@10", 10);
