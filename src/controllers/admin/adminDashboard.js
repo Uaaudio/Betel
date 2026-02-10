@@ -22,6 +22,7 @@ async function adminDashboard(req,res) {
         const totalCollectedPatios = await Patio.sum("collected",{where:{month:month}});
         const totalCollectedPrayerCircles = await prayerCircle.sum("collected",{where:{month:month}});
 
+        const users = User.findAll();
         console.log("Sucesso ao consultar os dados");
         
         try{
@@ -36,7 +37,8 @@ async function adminDashboard(req,res) {
                 totalPrayerCircles,
                 totalCollectedPatios,
                 totalCollectedPrayerCircles,
-                userLogged
+                userLogged,
+                users
             });
             
 
