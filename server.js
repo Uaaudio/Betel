@@ -12,6 +12,20 @@ const ejs = require("ejs");
 app.set("view engine" , "ejs");
 app.set("views","./src/views");
 
+// importando e configurando o express-session.
+const session = require("express-session");
+const session = require('express-session');
+
+app.use(session({
+    secret: 'Jesus Cristo Salva',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false, 
+        maxAge: 3600000 
+    }
+}));
+
 // pasta de arquivos estaticos.
 app.use(express.static("public"));
 
