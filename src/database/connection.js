@@ -1,43 +1,21 @@
 const Sequelize = require("sequelize");
-require('dotenv').config();
 
-const dbUri = process.env.DB_URL;
 
-let Connection;
+const Connection = new Sequelize(process.env.DB_NAME,process.env.DB_USER,process.env.DB_PASS,{
 
-if (dbUri && typeof dbUri === 'string') {
-    // Configuração para SQUARE CLOUD (Com SSL Obrigatório)
-    Connection = new Sequelize(dbUri, { 
-        dialect: "mysql", 
-        timezone: "-03:00", 
-        logging: false,
-        dialectOptions: {
-            ssl: {
-                rejectUnauthorized: false
-            }
-        }
-    });
-} else {
-    // Configuração para seu NOTEBOOK (Local)
-    Connection = new Sequelize(
-        process.env.DB_NAME, 
-        process.env.DB_USER, 
-        process.env.DB_PASS, 
-        {
-            host: process.env.DB_HOST,
-            dialect: "mysql",
-            timezone: "-03:00",
-            logging: false
-        }
-    );
-}
+    dialect: "mysql",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT
+
+});
 
 Connection.authenticate()
-    .then(() => {
-        console.log("🚀 Gênesis conectado ao banco com sucesso!");
-    })
-    .catch((error) => {
-        console.error("❌ Erro ao conectar no banco:", error);
+    .then(()=>{
+        console.log("Banco conectado com sucesso!")
+    }).catch((error)=>{
+        console.log("falha ao conectar ao banco de dados");
+        console.log(error);
     });
 
-module.exports = Connection;
+
+module.exports = Connection
