@@ -14,7 +14,7 @@ app.set("views","./src/views");
 
 // importando e configurando o express-session.
 const session = require("express-session");
-const session = require('express-session');
+
 
 app.use(session({
     secret: 'Jesus Cristo Salva',
