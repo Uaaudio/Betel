@@ -31,8 +31,10 @@ async function verifyUser(req,res,login,password,next){
                 // Força o save da sessão nos cookies.
 
                 req.session.save(()=>{
-                    return res.redirect("/admin/dashboard");
-                })
+                   console.log("Dados Salvos nos cookies");
+                });
+
+                next();
 
             }else{
 
