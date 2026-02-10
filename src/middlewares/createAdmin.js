@@ -1,5 +1,5 @@
 const User = require("../models/user"); // Verifique se o caminho e o "U" maiúsculo estão certos
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 async function seedAdmin() {
     try {
