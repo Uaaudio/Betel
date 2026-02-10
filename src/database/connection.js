@@ -1,32 +1,46 @@
 const Sequelize = require("sequelize");
+const fs = require("fs");
+const path = require("path");
 require('dotenv').config();
 
-// Se existir DB_URL, usamos ela. Caso contrário, usamos as variáveis separadas.
-const Connection = process.env.DB_URL 
-    ? new Sequelize(process.env.DB_URL, {
+const dbUri = process.env.DB_URL;
+
+let Connection;
+
+if (dbUri) {
+    // Configuração para PRODUÇÃO (Square Cloud com Certificados)
+    Connection = new Sequelize(dbUri, {
         dialect: "mysql",
         timezone: "-03:00",
         logging: false,
         dialectOptions: {
             ssl: {
-                rejectUnauthorized: false
+                // Carrega os arquivos que você recebeu
+                // Certifique-se de que os nomes dos arquivos estão idênticos aos da sua pasta
+                ca: fs.readFileSync(path.join(__dirname, "ca-certificate.crt")),
+                cert: fs.readFileSync(path.join(__dirname, "certificate.pem")),
+                key: fs.readFileSync(path.join(__dirname, "private-key.key")),
+                rejectUnauthorized: true // Agora usamos true porque temos os certificados oficiais
             }
         }
-    })
-    : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
-        dialect: "mysql",
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT || 3306,
-        timezone: "-03:00",
-        logging: false
     });
+} else {
+    // Configuração para seu NOTEBOOK (Local)
+    Connection = new Sequelize(
+        process.env.DB_NAME, 
+        process.env.DB_USER, 
+        process.env.DB_PASS, 
+        {
+            host: process.env.DB_HOST,
+            dialect: "mysql",
+            timezone: "-03:00",
+            logging: false
+        }
+    );
+}
 
 Connection.authenticate()
-    .then(() => {
-        console.log("🚀 Banco conectado com sucesso!");
-    }).catch((error) => {
-        console.log("falha ao conectar ao banco de dados");
-        console.log(error);
-    });
+    .then(() => console.log("🚀 Gênesis conectado com SSL Estrito!"))
+    .catch(err => console.error("❌ Erro na conexão com certificados:", err));
 
 module.exports = Connection;
