@@ -9,6 +9,6 @@ const {makeLogin} = require("../controllers/login/makeLogin");
 const {makeLogout} = require("../controllers/login/makeLogout");
 
 router.use("/",actionsMap,makeLogin);
-router.use("/logout",actionsMap,makeLogout);
+
 
 module.exports = router;

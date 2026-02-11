@@ -18,11 +18,14 @@ async function createPrayerCircle(req,res) {
         });
 
         console.log(`Sucesso: Circulo de oração do dia ${day}/${month} criado com sucesso.`);
-        
+        return req.redirect("/admin/seeprayercircles");
+
+
     } catch (error) {
         console.log("Falha ao criar registro: ");
         console.log(error);
-    }
+        return req.redirect("/admin/seeprayercircles");
+    };
 };
 
 module.exports = {createPrayerCircle};

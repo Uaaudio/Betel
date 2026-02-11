@@ -42,6 +42,7 @@ const autoCreatePrayerCircles = require("./src/middlewares/createPrayerCircles")
 //importando minhas rotas.
 const adminRoutes = require("./src/routes/adminRoutes");
 const loginRoutes = require("./src/routes/loginRoutes");
+const logoutRoutes = require("./src/routes/logoutRoutes");
 
 app.get("/",(req,res)=>{
     return res.render("login");
@@ -49,6 +50,7 @@ app.get("/",(req,res)=>{
 
 app.use("/admin",adminRoutes);
 app.use("/login",loginRoutes);
+app.use("/logout",logoutRoutes);
 
 
 app.listen(PORT,()=>{
