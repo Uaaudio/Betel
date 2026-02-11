@@ -24,6 +24,7 @@ async function autoCreatePrayerCircles() {
         console.log(error);
     }
 };
+autoCreatePrayerCircles();
 
 // Agendado para toda QUARTA-FEIRA (3) às 09:00
 cron.schedule("0 9 * * 3", autoCreatePrayerCircles, {
