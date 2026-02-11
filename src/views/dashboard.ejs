@@ -1,6 +1,11 @@
 <%- include('./partials/header') %>
 
-<div class="p-5 mb-4 bg-dark text-white rounded-4 shadow">
+<div class="p-5 mb-4 bg-dark text-white rounded-4 shadow position-relative">
+    <div class="position-absolute top-0 end-0 p-4">
+        <a href="/logout" class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="return confirm('Deseja realmente sair do sistema?')">
+            <i class="bi bi-box-arrow-right me-2"></i>Sair
+        </a>
+    </div>
     <div class="container-fluid py-2">
         <h1 class="display-5 fw-bold">Olá, <%= userLogged.name %> 👋</h1>
         <p class="col-md-8 fs-5 opacity-75">Resumo de <%= new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) %>.</p>
@@ -70,11 +75,10 @@
                 </button>
                 <hr>
                 <a href="/admin/seepatios" class="btn btn-success py-2 rounded-3 text-start">
-                    <i class="bi bi-plus-circle me-2"></i>Gerenciar Pátios
+                    <i class="bi bi-layout-text-sidebar-reverse me-2"></i>Gerenciar Pátios
                 </a>
-                <hr>
                 <a href="/admin/seeprayercircles" class="btn btn-success py-2 rounded-3 text-start">
-                    <i class="bi bi-plus-circle me-2"></i>Gerenciar Circulos de Oração
+                    <i class="bi bi-heart me-2"></i>Gerenciar Círculos
                 </a>
             </div>
         </div>
