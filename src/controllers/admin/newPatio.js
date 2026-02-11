@@ -18,12 +18,12 @@ async function createPatio(req,res) {
         });
 
         console.log(`Sucesso: Pátio do dia ${day}/${month} criado com sucesso.`);
-        return req.redirect("/admin/seepatios");
+        return res.redirect("/admin/seepatios");
         
     } catch (error) {
         console.log("Falha ao criar registro: ");
         console.log(error);
-        return req.redirect("/admin/seepatios");
+        return res.redirect("/admin/seepatios");
     };
 };
 
