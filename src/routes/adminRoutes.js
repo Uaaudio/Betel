@@ -11,10 +11,14 @@ const {actionsMap} = require("../middlewares/actionsMap");
 const {createUser} = require("../controllers/admin/createUser");
 const {adminDashboard} = require("../controllers/admin/adminDashboard");
 const {deleteUser} = require("../controllers/admin/deleteUser");
+const { editUser } = require("../controllers/admin/editUser");
+const {patiosOfmonth} = require("../controllers/admin/seePatios");
 
 router.post("/newuser",actionsMap,sessionVerify,createUser);
 router.use('/deleteuser',actionsMap,sessionVerify,deleteUser);
 router.get("/dashboard",actionsMap,sessionVerify,adminDashboard);
+router.put("/edituser",actionsMap,sessionVerify,editUser);
+router.use("/seepatios",actionsMap,sessionVerify,patiosOfmonth);
 
 
 
