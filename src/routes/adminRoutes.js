@@ -17,6 +17,7 @@ const {prayerCircleOfmonth} = require("../controllers/admin/seePrayerCircle");
 
 const {patioUpdateValue} = require("../controllers/admin/patioUpdateValue");
 const {prayerCirlceUpdateValue} = require("../controllers/admin/prayerCircleUpdateValue");
+const {deletePatio} = require("../controllers/admin/deletePatio");
 
 
 router.post("/newuser",actionsMap,sessionVerify,createUser);
@@ -27,6 +28,7 @@ router.use("/seepatios",actionsMap,sessionVerify,patiosOfmonth);
 router.use("/seeprayercircles",actionsMap,sessionVerify,prayerCircleOfmonth);
 router.use("/patioupdate",actionsMap,sessionVerify,patioUpdateValue);
 router.use("/prayercircleupdate",actionsMap,sessionVerify,prayerCirlceUpdateValue);
+router.user("/deletepatio",actionsMap,sessionVerify,deletePatio);
 
 
 
