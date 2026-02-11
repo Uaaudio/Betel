@@ -28,7 +28,7 @@ router.use("/seepatios",actionsMap,sessionVerify,patiosOfmonth);
 router.use("/seeprayercircles",actionsMap,sessionVerify,prayerCircleOfmonth);
 router.use("/patioupdate",actionsMap,sessionVerify,patioUpdateValue);
 router.use("/prayercircleupdate",actionsMap,sessionVerify,prayerCirlceUpdateValue);
-router.user("/deletepatio",actionsMap,sessionVerify,deletePatio);
+router.use("/deletepatio",actionsMap,sessionVerify,deletePatio);
 
 
 
