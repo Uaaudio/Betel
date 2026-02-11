@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+
 const patio = require("../../models/patio");
 
 

@@ -1,5 +1,5 @@
 
-const User = require("../../models");
+const User = require("../../models/user");
 const bcrypt = require("bcrypt");
 
 async function editUser(req,res){
