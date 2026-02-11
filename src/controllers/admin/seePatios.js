@@ -13,9 +13,9 @@ async function patiosOfmonth(req,res){
             try{
 
                 const patios = await patio.findAll({where:{month:month}});
-                if(patios.length > 0){
+                if(patios){
                     
-                    console.log("Cansulta bem sucedida, renderizando pagina");
+                    console.log("Consulta bem sucedida, renderizando pagina");
                     const title = "Patios"
                     return res.render("monthEvents",{patios,title});
                 }else{
