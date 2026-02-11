@@ -33,8 +33,11 @@ require("dotenv").config();
 
 // Importando meu banco para sync.
 const Connection = require("./src/database/connection");
-
 const syncTables = require("./src/database/syncTables");
+
+// Funções para gerar taxas semalmente.
+const autoCreatePatios = require("./src/middlewares/createPatios");
+const autoCreatePrayerCircles = require("./src/middlewares/createPrayerCircles");
 
 //importando minhas rotas.
 const adminRoutes = require("./src/routes/adminRoutes");
